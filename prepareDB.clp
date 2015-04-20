@@ -1,13 +1,13 @@
 
---create db FEDDB;
+create db FEDDB;
 
---create db DSDB;
+create db DSDB;
 
---SET DBM CFG USING FEDERATED YES;
+SET DBM CFG USING FEDERATED YES;
 
---connect to FEDDB;
---update db cfg using string_units codeunits32;
---connect reset;
+connect to FEDDB;
+update db cfg using string_units codeunits32;
+connect reset;
 
 CONNECT TO FEDDB;
 
