@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<title>[[TITLE]]</title>
+		<style type="text/css">
+			table {
+				font-size: 14px;
+				font-family: "Arial";
+			}
+			.untested {
+				background: #ffffff;
+			}
+			.error {
+				background: #ff7979;
+			}
+			.matched {
+				background: #b0e657;
+			}
+			.unmatched {
+				background: #cfae49;
+			}
+			.ignored {
+				background: #838383;
+			}
+			.header {
+				font-weight: bold;
+			}
+		</style>
+		<script type="text/javascript">
+		//<![CDATA[
+			function toggle1 (id) {
+				var o = document.getElementById ("PHASE1_CONTENT_" + id);
+				
+				if (o.style.display == "none")
+				{
+					o.style.display = "table-row";
+					document.getElementById ("TOGGLE1_" + id).innerHTML = "hide";
+				}
+				else
+				{
+					o.style.display = "none";
+					document.getElementById ("TOGGLE1_" + id).innerHTML = "show";
+				}
+			}
+			
+			function toggle2 (id) {
+				var o = document.getElementById ("PHASE2_CONTENT_" + id);
+				
+				if (o.style.display == "none")
+				{
+					o.style.display = "table-row";
+					document.getElementById ("TOGGLE2_" + id).innerHTML = "hide";
+				}
+				else
+				{
+					o.style.display = "none";
+					document.getElementById ("TOGGLE2_" + id).innerHTML = "show";
+				}
+			}
+		//]]>
+		</script>
+	</head>
+	<body>
+		<h1>[[TITLE]]</h1>
+		
+		<table border="1">
+			<tr>
+				<td width="20" class="untested">&nbsp;</td>
+				<td>Untested</td>
+			</tr>
+			<tr>
+				<td class="error">&nbsp;</td>
+				<td>Error</td>
+			</tr>
+			<tr>
+				<td class="matched">&nbsp;</td>
+				<td>Matched</td>
+			</tr>
+			<tr>
+				<td class="unmatched">&nbsp;</td>
+				<td>Unmatched</td>
+			</tr>
+			<tr>
+				<td class="ignored">&nbsp;</td>
+				<td>Ignored</td>
+			</tr>
+		</table>
+		<br />
+		<br />
+		[[CONTENT]]
+	</body>
+</html>
