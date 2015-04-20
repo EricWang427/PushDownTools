@@ -1,0 +1,1000 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<title>Push Down Temporary Report [1 - 50]</title>
+		<style type="text/css">
+			table {
+				font-size: 14px;
+				font-family: "Arial";
+			}
+			.untested {
+				background: #ffffff;
+			}
+			.error {
+				background: #ff7979;
+			}
+			.matched {
+				background: #b0e657;
+			}
+			.unmatched {
+				background: #cfae49;
+			}
+			.ignored {
+				background: #838383;
+			}
+			.header {
+				font-weight: bold;
+			}
+		</style>
+		<script type="text/javascript">
+		//<![CDATA[
+			function toggle1 (id) {
+				var o = document.getElementById ("PHASE1_CONTENT_" + id);
+				
+				if (o.style.display == "none")
+				{
+					o.style.display = "table-row";
+					document.getElementById ("TOGGLE1_" + id).innerHTML = "hide";
+				}
+				else
+				{
+					o.style.display = "none";
+					document.getElementById ("TOGGLE1_" + id).innerHTML = "show";
+				}
+			}
+			
+			function toggle2 (id) {
+				var o = document.getElementById ("PHASE2_CONTENT_" + id);
+				
+				if (o.style.display == "none")
+				{
+					o.style.display = "table-row";
+					document.getElementById ("TOGGLE2_" + id).innerHTML = "hide";
+				}
+				else
+				{
+					o.style.display = "none";
+					document.getElementById ("TOGGLE2_" + id).innerHTML = "show";
+				}
+			}
+		//]]>
+		</script>
+	</head>
+	<body>
+		<h1>Push Down Temporary Report [1 - 50]</h1>
+		
+		<table border="1">
+			<tr>
+				<td width="20" class="untested">&nbsp;</td>
+				<td>Untested</td>
+			</tr>
+			<tr>
+				<td class="error">&nbsp;</td>
+				<td>Error</td>
+			</tr>
+			<tr>
+				<td class="matched">&nbsp;</td>
+				<td>Matched</td>
+			</tr>
+			<tr>
+				<td class="unmatched">&nbsp;</td>
+				<td>Unmatched</td>
+			</tr>
+			<tr>
+				<td class="ignored">&nbsp;</td>
+				<td>Ignored</td>
+			</tr>
+		</table>
+		<br />
+		<br />
+		<table border="1" style="width: 100%;">
+	<tr class="header">
+		<td style="width: 60px;">ID</td>
+		<td>Func Signature</td>
+		<td style="width: 60px;">Phase I</td>
+		<td style="width: 60px;">Phase II</td>
+	</tr>
+	<tr>
+	<td>1</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.CHAR,SYSIBM.SMALLINT,SYSIBM.SMALLINT)->SYSIBM.CHAR</td>
+	<td class="unmatched"><a id="TOGGLE1_1" href="javascript:toggle1('1')">show</a></td>
+	<td class="matched"><a id="TOGGLE2_1" href="javascript:toggle2('1')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_1" style="display: none;" class="unmatched">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(CHA,SMI,SMI) from T1<br />sql2: select SYSIBM.SUBSTRB(CHA,SMI,SMI) from N1<br />First result for sql(1,2): C<br /><br /><a href="plan/plan1-1.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT SUBSTRB(Q1.CHA, Q1.SMI, Q1.SMI) FROM IIFVT66.N1 AS Q1<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."CHA", A0."SMI" FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: NOT MATCHED<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_1" style="display: none;" class="matched">
+	<td>Phase II</td>
+	<td colspan="3">
+		sql1: select DOB from T1 where SYSIBM.SUBSTRB(CHA,SMI,SMI) = 'C'<br />sql2: select DOB from N1 where SYSIBM.SUBSTRB(CHA,SMI,SMI) = 'C'<br />First result for sql(3,4): +6.67259000000000E-011<br /><br /><a href="plan/plan1-2.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT Q1.DOB AS "DOB" FROM IIFVT66.N1 AS Q1 WHERE (SUBSTRB(Q1.CHA, Q1.SMI, Q1.SMI) = 'C')<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."DOB" FROM "IIFVT66"."T1" A0 WHERE (SYSIBM.SUBSTRB(A0."CHA", A0."SMI", A0."SMI") = 'C') FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: MATCHED<br /><br />
+	</td>
+</tr>
+<tr>
+	<td>2</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.CHAR,SYSIBM.SMALLINT,SYSIBM.INTEGER)->SYSIBM.CHAR</td>
+	<td class="matched"><a id="TOGGLE1_2" href="javascript:toggle1('2')">show</a></td>
+	<td class="matched"><a id="TOGGLE2_2" href="javascript:toggle2('2')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_2" style="display: none;" class="matched">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(CHA,SMI,ITG) from T1<br />sql2: select SYSIBM.SUBSTRB(CHA,SMI,ITG) from N1<br />First result for sql(1,2): CAHR FOR TEST<br /><br /><a href="plan/plan2-1.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT SUBSTRB(Q1.CHA, Q1.SMI, Q1.ITG) FROM IIFVT66.N1 AS Q1<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT SYSIBM.SUBSTRB(A0."CHA", A0."SMI", A0."ITG") FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: MATCHED<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_2" style="display: none;" class="matched">
+	<td>Phase II</td>
+	<td colspan="3">
+		sql1: select DOB from T1 where SYSIBM.SUBSTRB(CHA,SMI,ITG) = 'CAHR FOR TEST'<br />sql2: select DOB from N1 where SYSIBM.SUBSTRB(CHA,SMI,ITG) = 'CAHR FOR TEST'<br />First result for sql(3,4): +6.67259000000000E-011<br /><br /><a href="plan/plan2-2.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT Q1.DOB AS "DOB" FROM IIFVT66.N1 AS Q1 WHERE (SUBSTRB(Q1.CHA, Q1.SMI, Q1.ITG) = 'CAHR FOR TEST')<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."DOB" FROM "IIFVT66"."T1" A0 WHERE (SYSIBM.SUBSTRB(A0."CHA", A0."SMI", A0."ITG") = 'CAHR FOR TEST') FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: MATCHED<br /><br />
+	</td>
+</tr>
+<tr>
+	<td>3</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.CHAR,SYSIBM.SMALLINT,SYSIBM.BIGINT)->SYSIBM.CHAR</td>
+	<td class="error"><a id="TOGGLE1_3" href="javascript:toggle1('3')">show</a></td>
+	<td class="untested"><a id="TOGGLE2_3" href="javascript:toggle2('3')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_3" style="display: none;" class="error">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(CHA,SMI,BGI) from T1<br />sql2: select SYSIBM.SUBSTRB(CHA,SMI,BGI) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -0413/22003<br />sql2 (code/status): -1822/560BD<br />SQL1 OUTPUT:<br /><br />1                                                              <br />---------------------------------------------------------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />SQL2 OUTPUT:<br /><br />1                                                              <br />---------------------------------------------------------------<br />SQL1822N  Unexpected error code "22003" received from data source "PDSERVER". <br />Associated text and tokens are "func="block_fetch" msg=" SQL0413N  Overflow <br />occurred du".  SQLSTATE=560BD<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_3" style="display: none;" class="untested">
+	<td>Phase II</td>
+	<td colspan="3">
+		
+	</td>
+</tr>
+<tr>
+	<td>4</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.CHAR,SYSIBM.INTEGER,SYSIBM.SMALLINT)->SYSIBM.CHAR</td>
+	<td class="matched"><a id="TOGGLE1_4" href="javascript:toggle1('4')">show</a></td>
+	<td class="matched"><a id="TOGGLE2_4" href="javascript:toggle2('4')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_4" style="display: none;" class="matched">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(CHA,ITG,SMI) from T1<br />sql2: select SYSIBM.SUBSTRB(CHA,ITG,SMI) from N1<br />First result for sql(1,2): <br /><br /><a href="plan/plan4-1.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT SUBSTRB(Q1.CHA, Q1.ITG, Q1.SMI) FROM IIFVT66.N1 AS Q1<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT SYSIBM.SUBSTRB(A0."CHA", A0."ITG", A0."SMI") FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: MATCHED<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_4" style="display: none;" class="matched">
+	<td>Phase II</td>
+	<td colspan="3">
+		sql1: select DOB from T1 where SYSIBM.SUBSTRB(CHA,ITG,SMI) = ''<br />sql2: select DOB from N1 where SYSIBM.SUBSTRB(CHA,ITG,SMI) = ''<br />First result for sql(3,4): +6.67259000000000E-011<br /><br /><a href="plan/plan4-2.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT Q1.DOB AS "DOB" FROM IIFVT66.N1 AS Q1 WHERE (SUBSTRB(Q1.CHA, Q1.ITG, Q1.SMI) = '')<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."DOB" FROM "IIFVT66"."T1" A0 WHERE (SYSIBM.SUBSTRB(A0."CHA", A0."ITG", A0."SMI") = '') FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: MATCHED<br /><br />
+	</td>
+</tr>
+<tr>
+	<td>5</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.CHAR,SYSIBM.INTEGER,SYSIBM.INTEGER)->SYSIBM.CHAR</td>
+	<td class="unmatched"><a id="TOGGLE1_5" href="javascript:toggle1('5')">show</a></td>
+	<td class="matched"><a id="TOGGLE2_5" href="javascript:toggle2('5')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_5" style="display: none;" class="unmatched">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(CHA,ITG,ITG) from T1<br />sql2: select SYSIBM.SUBSTRB(CHA,ITG,ITG) from N1<br />First result for sql(1,2): <br /><br /><a href="plan/plan5-1.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT SUBSTRB(Q1.CHA, Q1.ITG, Q1.ITG) FROM IIFVT66.N1 AS Q1<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."CHA", A0."ITG" FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: NOT MATCHED<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_5" style="display: none;" class="matched">
+	<td>Phase II</td>
+	<td colspan="3">
+		sql1: select DOB from T1 where SYSIBM.SUBSTRB(CHA,ITG,ITG) = ''<br />sql2: select DOB from N1 where SYSIBM.SUBSTRB(CHA,ITG,ITG) = ''<br />First result for sql(3,4): +6.67259000000000E-011<br /><br /><a href="plan/plan5-2.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT Q1.DOB AS "DOB" FROM IIFVT66.N1 AS Q1 WHERE (SUBSTRB(Q1.CHA, Q1.ITG, Q1.ITG) = '')<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."DOB" FROM "IIFVT66"."T1" A0 WHERE (SYSIBM.SUBSTRB(A0."CHA", A0."ITG", A0."ITG") = '') FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: MATCHED<br /><br />
+	</td>
+</tr>
+<tr>
+	<td>6</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.CHAR,SYSIBM.INTEGER,SYSIBM.BIGINT)->SYSIBM.CHAR</td>
+	<td class="error"><a id="TOGGLE1_6" href="javascript:toggle1('6')">show</a></td>
+	<td class="untested"><a id="TOGGLE2_6" href="javascript:toggle2('6')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_6" style="display: none;" class="error">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(CHA,ITG,BGI) from T1<br />sql2: select SYSIBM.SUBSTRB(CHA,ITG,BGI) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -0413/22003<br />sql2 (code/status): -1822/560BD<br />SQL1 OUTPUT:<br /><br />1                                                              <br />---------------------------------------------------------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />SQL2 OUTPUT:<br /><br />1                                                              <br />---------------------------------------------------------------<br />SQL1822N  Unexpected error code "22003" received from data source "PDSERVER". <br />Associated text and tokens are "func="block_fetch" msg=" SQL0413N  Overflow <br />occurred du".  SQLSTATE=560BD<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_6" style="display: none;" class="untested">
+	<td>Phase II</td>
+	<td colspan="3">
+		
+	</td>
+</tr>
+<tr>
+	<td>7</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.CHAR,SYSIBM.BIGINT,SYSIBM.SMALLINT)->SYSIBM.CHAR</td>
+	<td class="error"><a id="TOGGLE1_7" href="javascript:toggle1('7')">show</a></td>
+	<td class="untested"><a id="TOGGLE2_7" href="javascript:toggle2('7')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_7" style="display: none;" class="error">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(CHA,BGI,SMI) from T1<br />sql2: select SYSIBM.SUBSTRB(CHA,BGI,SMI) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -0413/22003<br />sql2 (code/status): -1822/560BD<br />SQL1 OUTPUT:<br /><br />1                                                              <br />---------------------------------------------------------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />SQL2 OUTPUT:<br /><br />1                                                              <br />---------------------------------------------------------------<br />SQL1822N  Unexpected error code "22003" received from data source "PDSERVER". <br />Associated text and tokens are "func="block_fetch" msg=" SQL0413N  Overflow <br />occurred du".  SQLSTATE=560BD<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_7" style="display: none;" class="untested">
+	<td>Phase II</td>
+	<td colspan="3">
+		
+	</td>
+</tr>
+<tr>
+	<td>8</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.CHAR,SYSIBM.BIGINT,SYSIBM.INTEGER)->SYSIBM.CHAR</td>
+	<td class="error"><a id="TOGGLE1_8" href="javascript:toggle1('8')">show</a></td>
+	<td class="untested"><a id="TOGGLE2_8" href="javascript:toggle2('8')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_8" style="display: none;" class="error">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(CHA,BGI,ITG) from T1<br />sql2: select SYSIBM.SUBSTRB(CHA,BGI,ITG) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -0413/22003<br />sql2 (code/status): -1822/560BD<br />SQL1 OUTPUT:<br /><br />1                                                              <br />---------------------------------------------------------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />SQL2 OUTPUT:<br /><br />1                                                              <br />---------------------------------------------------------------<br />SQL1822N  Unexpected error code "22003" received from data source "PDSERVER". <br />Associated text and tokens are "func="block_fetch" msg=" SQL0413N  Overflow <br />occurred du".  SQLSTATE=560BD<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_8" style="display: none;" class="untested">
+	<td>Phase II</td>
+	<td colspan="3">
+		
+	</td>
+</tr>
+<tr>
+	<td>9</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.CHAR,SYSIBM.BIGINT,SYSIBM.BIGINT)->SYSIBM.CHAR</td>
+	<td class="error"><a id="TOGGLE1_9" href="javascript:toggle1('9')">show</a></td>
+	<td class="untested"><a id="TOGGLE2_9" href="javascript:toggle2('9')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_9" style="display: none;" class="error">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(CHA,BGI,BGI) from T1<br />sql2: select SYSIBM.SUBSTRB(CHA,BGI,BGI) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -0413/22003<br />sql2 (code/status): -1822/560BD<br />SQL1 OUTPUT:<br /><br />1                                                              <br />---------------------------------------------------------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />SQL2 OUTPUT:<br /><br />1                                                              <br />---------------------------------------------------------------<br />SQL1822N  Unexpected error code "22003" received from data source "PDSERVER". <br />Associated text and tokens are "func="block_fetch" msg=" SQL0413N  Overflow <br />occurred du".  SQLSTATE=560BD<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_9" style="display: none;" class="untested">
+	<td>Phase II</td>
+	<td colspan="3">
+		
+	</td>
+</tr>
+<tr>
+	<td>10</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.VARCHAR,SYSIBM.SMALLINT,SYSIBM.SMALLINT)->SYSIBM.VARCHAR</td>
+	<td class="unmatched"><a id="TOGGLE1_10" href="javascript:toggle1('10')">show</a></td>
+	<td class="matched"><a id="TOGGLE2_10" href="javascript:toggle2('10')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_10" style="display: none;" class="unmatched">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(VCH,SMI,SMI) from T1<br />sql2: select SYSIBM.SUBSTRB(VCH,SMI,SMI) from N1<br />First result for sql(1,2): V<br /><br /><a href="plan/plan10-1.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT SUBSTRB(Q1.VCH, Q1.SMI, Q1.SMI) FROM IIFVT66.N1 AS Q1<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."VCH", A0."SMI" FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: NOT MATCHED<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_10" style="display: none;" class="matched">
+	<td>Phase II</td>
+	<td colspan="3">
+		sql1: select DOB from T1 where SYSIBM.SUBSTRB(VCH,SMI,SMI) = 'V'<br />sql2: select DOB from N1 where SYSIBM.SUBSTRB(VCH,SMI,SMI) = 'V'<br />First result for sql(3,4): +6.67259000000000E-011<br /><br /><a href="plan/plan10-2.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT Q1.DOB AS "DOB" FROM IIFVT66.N1 AS Q1 WHERE (SUBSTRB(Q1.VCH, Q1.SMI, Q1.SMI) = 'V')<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."DOB" FROM "IIFVT66"."T1" A0 WHERE (SYSIBM.SUBSTRB(A0."VCH", A0."SMI", A0."SMI") = 'V') FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: MATCHED<br /><br />
+	</td>
+</tr>
+<tr>
+	<td>11</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.VARCHAR,SYSIBM.SMALLINT,SYSIBM.INTEGER)->SYSIBM.VARCHAR</td>
+	<td class="matched"><a id="TOGGLE1_11" href="javascript:toggle1('11')">show</a></td>
+	<td class="matched"><a id="TOGGLE2_11" href="javascript:toggle2('11')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_11" style="display: none;" class="matched">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(VCH,SMI,ITG) from T1<br />sql2: select SYSIBM.SUBSTRB(VCH,SMI,ITG) from N1<br />First result for sql(1,2): VARCHAR FOR TEST<br /><br /><a href="plan/plan11-1.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT SUBSTRB(Q1.VCH, Q1.SMI, Q1.ITG) FROM IIFVT66.N1 AS Q1<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT SYSIBM.SUBSTRB(A0."VCH", A0."SMI", A0."ITG") FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: MATCHED<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_11" style="display: none;" class="matched">
+	<td>Phase II</td>
+	<td colspan="3">
+		sql1: select DOB from T1 where SYSIBM.SUBSTRB(VCH,SMI,ITG) = 'VARCHAR FOR TEST'<br />sql2: select DOB from N1 where SYSIBM.SUBSTRB(VCH,SMI,ITG) = 'VARCHAR FOR TEST'<br />First result for sql(3,4): +6.67259000000000E-011<br /><br /><a href="plan/plan11-2.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT Q1.DOB AS "DOB" FROM IIFVT66.N1 AS Q1 WHERE (SUBSTRB(Q1.VCH, Q1.SMI, Q1.ITG) = 'VARCHAR FOR TEST')<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."DOB" FROM "IIFVT66"."T1" A0 WHERE (SYSIBM.SUBSTRB(A0."VCH", A0."SMI", A0."ITG") = 'VARCHAR FOR TEST') FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: MATCHED<br /><br />
+	</td>
+</tr>
+<tr>
+	<td>12</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.VARCHAR,SYSIBM.SMALLINT,SYSIBM.BIGINT)->SYSIBM.VARCHAR</td>
+	<td class="error"><a id="TOGGLE1_12" href="javascript:toggle1('12')">show</a></td>
+	<td class="untested"><a id="TOGGLE2_12" href="javascript:toggle2('12')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_12" style="display: none;" class="error">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(VCH,SMI,BGI) from T1<br />sql2: select SYSIBM.SUBSTRB(VCH,SMI,BGI) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -0413/22003<br />sql2 (code/status): -1822/560BD<br />SQL1 OUTPUT:<br /><br />1                                                                                                                               <br />--------------------------------------------------------------------------------------------------------------------------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />SQL2 OUTPUT:<br /><br />1                                                                                                                               <br />--------------------------------------------------------------------------------------------------------------------------------<br />SQL1822N  Unexpected error code "22003" received from data source "PDSERVER". <br />Associated text and tokens are "func="block_fetch" msg=" SQL0413N  Overflow <br />occurred du".  SQLSTATE=560BD<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_12" style="display: none;" class="untested">
+	<td>Phase II</td>
+	<td colspan="3">
+		
+	</td>
+</tr>
+<tr>
+	<td>13</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.VARCHAR,SYSIBM.INTEGER,SYSIBM.SMALLINT)->SYSIBM.VARCHAR</td>
+	<td class="matched"><a id="TOGGLE1_13" href="javascript:toggle1('13')">show</a></td>
+	<td class="matched"><a id="TOGGLE2_13" href="javascript:toggle2('13')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_13" style="display: none;" class="matched">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(VCH,ITG,SMI) from T1<br />sql2: select SYSIBM.SUBSTRB(VCH,ITG,SMI) from N1<br />First result for sql(1,2): <br /><br /><a href="plan/plan13-1.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT SUBSTRB(Q1.VCH, Q1.ITG, Q1.SMI) FROM IIFVT66.N1 AS Q1<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT SYSIBM.SUBSTRB(A0."VCH", A0."ITG", A0."SMI") FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: MATCHED<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_13" style="display: none;" class="matched">
+	<td>Phase II</td>
+	<td colspan="3">
+		sql1: select DOB from T1 where SYSIBM.SUBSTRB(VCH,ITG,SMI) = ''<br />sql2: select DOB from N1 where SYSIBM.SUBSTRB(VCH,ITG,SMI) = ''<br />First result for sql(3,4): +6.67259000000000E-011<br /><br /><a href="plan/plan13-2.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT Q1.DOB AS "DOB" FROM IIFVT66.N1 AS Q1 WHERE (SUBSTRB(Q1.VCH, Q1.ITG, Q1.SMI) = '')<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."DOB" FROM "IIFVT66"."T1" A0 WHERE (SYSIBM.SUBSTRB(A0."VCH", A0."ITG", A0."SMI") = '') FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: MATCHED<br /><br />
+	</td>
+</tr>
+<tr>
+	<td>14</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.VARCHAR,SYSIBM.INTEGER,SYSIBM.INTEGER)->SYSIBM.VARCHAR</td>
+	<td class="matched"><a id="TOGGLE1_14" href="javascript:toggle1('14')">show</a></td>
+	<td class="matched"><a id="TOGGLE2_14" href="javascript:toggle2('14')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_14" style="display: none;" class="matched">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(VCH,ITG,ITG) from T1<br />sql2: select SYSIBM.SUBSTRB(VCH,ITG,ITG) from N1<br />First result for sql(1,2): <br /><br /><a href="plan/plan14-1.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT SUBSTRB(Q1.VCH, Q1.ITG, Q1.ITG) FROM IIFVT66.N1 AS Q1<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT SYSIBM.SUBSTRB(A0."VCH", A0."ITG", A0."ITG") FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: MATCHED<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_14" style="display: none;" class="matched">
+	<td>Phase II</td>
+	<td colspan="3">
+		sql1: select DOB from T1 where SYSIBM.SUBSTRB(VCH,ITG,ITG) = ''<br />sql2: select DOB from N1 where SYSIBM.SUBSTRB(VCH,ITG,ITG) = ''<br />First result for sql(3,4): +6.67259000000000E-011<br /><br /><a href="plan/plan14-2.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT Q1.DOB AS "DOB" FROM IIFVT66.N1 AS Q1 WHERE (SUBSTRB(Q1.VCH, Q1.ITG, Q1.ITG) = '')<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."DOB" FROM "IIFVT66"."T1" A0 WHERE (SYSIBM.SUBSTRB(A0."VCH", A0."ITG", A0."ITG") = '') FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: MATCHED<br /><br />
+	</td>
+</tr>
+<tr>
+	<td>15</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.VARCHAR,SYSIBM.INTEGER,SYSIBM.BIGINT)->SYSIBM.VARCHAR</td>
+	<td class="error"><a id="TOGGLE1_15" href="javascript:toggle1('15')">show</a></td>
+	<td class="untested"><a id="TOGGLE2_15" href="javascript:toggle2('15')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_15" style="display: none;" class="error">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(VCH,ITG,BGI) from T1<br />sql2: select SYSIBM.SUBSTRB(VCH,ITG,BGI) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -0413/22003<br />sql2 (code/status): -1822/560BD<br />SQL1 OUTPUT:<br /><br />1                                                                                                                               <br />--------------------------------------------------------------------------------------------------------------------------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />SQL2 OUTPUT:<br /><br />1                                                                                                                               <br />--------------------------------------------------------------------------------------------------------------------------------<br />SQL1822N  Unexpected error code "22003" received from data source "PDSERVER". <br />Associated text and tokens are "func="block_fetch" msg=" SQL0413N  Overflow <br />occurred du".  SQLSTATE=560BD<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_15" style="display: none;" class="untested">
+	<td>Phase II</td>
+	<td colspan="3">
+		
+	</td>
+</tr>
+<tr>
+	<td>16</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.VARCHAR,SYSIBM.BIGINT,SYSIBM.SMALLINT)->SYSIBM.VARCHAR</td>
+	<td class="error"><a id="TOGGLE1_16" href="javascript:toggle1('16')">show</a></td>
+	<td class="untested"><a id="TOGGLE2_16" href="javascript:toggle2('16')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_16" style="display: none;" class="error">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(VCH,BGI,SMI) from T1<br />sql2: select SYSIBM.SUBSTRB(VCH,BGI,SMI) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -0413/22003<br />sql2 (code/status): -1822/560BD<br />SQL1 OUTPUT:<br /><br />1                                                                                                                               <br />--------------------------------------------------------------------------------------------------------------------------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />SQL2 OUTPUT:<br /><br />1                                                                                                                               <br />--------------------------------------------------------------------------------------------------------------------------------<br />SQL1822N  Unexpected error code "22003" received from data source "PDSERVER". <br />Associated text and tokens are "func="block_fetch" msg=" SQL0413N  Overflow <br />occurred du".  SQLSTATE=560BD<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_16" style="display: none;" class="untested">
+	<td>Phase II</td>
+	<td colspan="3">
+		
+	</td>
+</tr>
+<tr>
+	<td>17</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.VARCHAR,SYSIBM.BIGINT,SYSIBM.INTEGER)->SYSIBM.VARCHAR</td>
+	<td class="error"><a id="TOGGLE1_17" href="javascript:toggle1('17')">show</a></td>
+	<td class="untested"><a id="TOGGLE2_17" href="javascript:toggle2('17')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_17" style="display: none;" class="error">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(VCH,BGI,ITG) from T1<br />sql2: select SYSIBM.SUBSTRB(VCH,BGI,ITG) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -0413/22003<br />sql2 (code/status): -1822/560BD<br />SQL1 OUTPUT:<br /><br />1                                                                                                                               <br />--------------------------------------------------------------------------------------------------------------------------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />SQL2 OUTPUT:<br /><br />1                                                                                                                               <br />--------------------------------------------------------------------------------------------------------------------------------<br />SQL1822N  Unexpected error code "22003" received from data source "PDSERVER". <br />Associated text and tokens are "func="block_fetch" msg=" SQL0413N  Overflow <br />occurred du".  SQLSTATE=560BD<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_17" style="display: none;" class="untested">
+	<td>Phase II</td>
+	<td colspan="3">
+		
+	</td>
+</tr>
+<tr>
+	<td>18</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.VARCHAR,SYSIBM.BIGINT,SYSIBM.BIGINT)->SYSIBM.VARCHAR</td>
+	<td class="error"><a id="TOGGLE1_18" href="javascript:toggle1('18')">show</a></td>
+	<td class="untested"><a id="TOGGLE2_18" href="javascript:toggle2('18')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_18" style="display: none;" class="error">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(VCH,BGI,BGI) from T1<br />sql2: select SYSIBM.SUBSTRB(VCH,BGI,BGI) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -0413/22003<br />sql2 (code/status): -1822/560BD<br />SQL1 OUTPUT:<br /><br />1                                                                                                                               <br />--------------------------------------------------------------------------------------------------------------------------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />SQL2 OUTPUT:<br /><br />1                                                                                                                               <br />--------------------------------------------------------------------------------------------------------------------------------<br />SQL1822N  Unexpected error code "22003" received from data source "PDSERVER". <br />Associated text and tokens are "func="block_fetch" msg=" SQL0413N  Overflow <br />occurred du".  SQLSTATE=560BD<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_18" style="display: none;" class="untested">
+	<td>Phase II</td>
+	<td colspan="3">
+		
+	</td>
+</tr>
+<tr>
+	<td>19</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.CLOB,SYSIBM.SMALLINT,SYSIBM.SMALLINT)->SYSIBM.CLOB</td>
+	<td class="unmatched"><a id="TOGGLE1_19" href="javascript:toggle1('19')">show</a></td>
+	<td class="unmatched"><a id="TOGGLE2_19" href="javascript:toggle2('19')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_19" style="display: none;" class="unmatched">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(CLOB('CLOB FOR TEST'),SMI,SMI) from T1<br />sql2: select SYSIBM.SUBSTRB(CLOB('CLOB FOR TEST'),SMI,SMI) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -3324/0<br />sql2 (code/status): 0/0<br />SQL1 OUTPUT:<br />SQL3324N  Column "1" has a type of "CLOB" which is not recognized.<br /><br />SQL2 OUTPUT:<br /><br />1            <br />-------------<br />C            <br /><br />  1 record(s) selected.<br /><br /><br />First result for sql(1,2): C<br /><br /><a href="plan/plan19-1.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT SUBSTRB(CLOB('CLOB FOR TEST'), Q1.SMI, Q1.SMI) FROM IIFVT66.N1 AS Q1<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."SMI" FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: NOT MATCHED<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_19" style="display: none;" class="unmatched">
+	<td>Phase II</td>
+	<td colspan="3">
+		sql1: select DOB from T1 where SYSIBM.SUBSTRB(CLOB('CLOB FOR TEST'),SMI,SMI) = clob('C')<br />sql2: select DOB from N1 where SYSIBM.SUBSTRB(CLOB('CLOB FOR TEST'),SMI,SMI) = clob('C')<br />First result for sql(3,4): +6.67259000000000E-011<br /><br /><a href="plan/plan19-2.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT Q1.DOB AS "DOB" FROM IIFVT66.N1 AS Q1 WHERE (VARCHAR(SUBSTRB(CLOB('CLOB FOR TEST'), Q1.SMI, Q1.SMI)) = VARCHAR(CLOB('C')))<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."SMI", A0."DOB" FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: NOT MATCHED<br /><br />
+	</td>
+</tr>
+<tr>
+	<td>20</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.CLOB,SYSIBM.SMALLINT,SYSIBM.INTEGER)->SYSIBM.CLOB</td>
+	<td class="unmatched"><a id="TOGGLE1_20" href="javascript:toggle1('20')">show</a></td>
+	<td class="unmatched"><a id="TOGGLE2_20" href="javascript:toggle2('20')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_20" style="display: none;" class="unmatched">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(CLOB('CLOB FOR TEST'),SMI,ITG) from T1<br />sql2: select SYSIBM.SUBSTRB(CLOB('CLOB FOR TEST'),SMI,ITG) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -3324/0<br />sql2 (code/status): 0/0<br />SQL1 OUTPUT:<br />SQL3324N  Column "1" has a type of "CLOB" which is not recognized.<br /><br />SQL2 OUTPUT:<br /><br />1            <br />-------------<br />CLOB FOR TEST<br /><br />  1 record(s) selected.<br /><br /><br />First result for sql(1,2): CLOB FOR TEST<br /><br /><a href="plan/plan20-1.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT SUBSTRB(CLOB('CLOB FOR TEST'), Q1.SMI, Q1.ITG) FROM IIFVT66.N1 AS Q1<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."SMI", A0."ITG" FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: NOT MATCHED<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_20" style="display: none;" class="unmatched">
+	<td>Phase II</td>
+	<td colspan="3">
+		sql1: select DOB from T1 where SYSIBM.SUBSTRB(CLOB('CLOB FOR TEST'),SMI,ITG) = clob('CLOB FOR TEST')<br />sql2: select DOB from N1 where SYSIBM.SUBSTRB(CLOB('CLOB FOR TEST'),SMI,ITG) = clob('CLOB FOR TEST')<br />First result for sql(3,4): +6.67259000000000E-011<br /><br /><a href="plan/plan20-2.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT Q1.DOB AS "DOB" FROM IIFVT66.N1 AS Q1 WHERE (VARCHAR(SUBSTRB(CLOB('CLOB FOR TEST'), Q1.SMI, Q1.ITG)) = VARCHAR(CLOB('CLOB FOR TEST')))<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."SMI", A0."ITG", A0."DOB" FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: NOT MATCHED<br /><br />
+	</td>
+</tr>
+<tr>
+	<td>21</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.CLOB,SYSIBM.SMALLINT,SYSIBM.BIGINT)->SYSIBM.CLOB</td>
+	<td class="error"><a id="TOGGLE1_21" href="javascript:toggle1('21')">show</a></td>
+	<td class="untested"><a id="TOGGLE2_21" href="javascript:toggle2('21')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_21" style="display: none;" class="error">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(CLOB('CLOB FOR TEST'),SMI,BGI) from T1<br />sql2: select SYSIBM.SUBSTRB(CLOB('CLOB FOR TEST'),SMI,BGI) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -3324/0<br />sql2 (code/status): -0413/22003<br />SQL1 OUTPUT:<br />SQL3324N  Column "1" has a type of "CLOB" which is not recognized.<br /><br />SQL2 OUTPUT:<br /><br />1            <br />-------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_21" style="display: none;" class="untested">
+	<td>Phase II</td>
+	<td colspan="3">
+		
+	</td>
+</tr>
+<tr>
+	<td>22</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.CLOB,SYSIBM.INTEGER,SYSIBM.SMALLINT)->SYSIBM.CLOB</td>
+	<td class="unmatched"><a id="TOGGLE1_22" href="javascript:toggle1('22')">show</a></td>
+	<td class="unmatched"><a id="TOGGLE2_22" href="javascript:toggle2('22')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_22" style="display: none;" class="unmatched">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(CLOB('CLOB FOR TEST'),ITG,SMI) from T1<br />sql2: select SYSIBM.SUBSTRB(CLOB('CLOB FOR TEST'),ITG,SMI) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -3324/0<br />sql2 (code/status): 0/0<br />SQL1 OUTPUT:<br />SQL3324N  Column "1" has a type of "CLOB" which is not recognized.<br /><br />SQL2 OUTPUT:<br /><br />1            <br />-------------<br />             <br /><br />  1 record(s) selected.<br /><br /><br />First result for sql(1,2): <br /><br /><a href="plan/plan22-1.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT SUBSTRB(CLOB('CLOB FOR TEST'), Q1.ITG, Q1.SMI) FROM IIFVT66.N1 AS Q1<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."ITG", A0."SMI" FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: NOT MATCHED<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_22" style="display: none;" class="unmatched">
+	<td>Phase II</td>
+	<td colspan="3">
+		sql1: select DOB from T1 where SYSIBM.SUBSTRB(CLOB('CLOB FOR TEST'),ITG,SMI) = clob('')<br />sql2: select DOB from N1 where SYSIBM.SUBSTRB(CLOB('CLOB FOR TEST'),ITG,SMI) = clob('')<br />First result for sql(3,4): +6.67259000000000E-011<br /><br /><a href="plan/plan22-2.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT Q1.DOB AS "DOB" FROM IIFVT66.N1 AS Q1 WHERE (VARCHAR(SUBSTRB(CLOB('CLOB FOR TEST'), Q1.ITG, Q1.SMI)) = VARCHAR(CLOB('')))<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."ITG", A0."SMI", A0."DOB" FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: NOT MATCHED<br /><br />
+	</td>
+</tr>
+<tr>
+	<td>23</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.CLOB,SYSIBM.INTEGER,SYSIBM.INTEGER)->SYSIBM.CLOB</td>
+	<td class="unmatched"><a id="TOGGLE1_23" href="javascript:toggle1('23')">show</a></td>
+	<td class="unmatched"><a id="TOGGLE2_23" href="javascript:toggle2('23')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_23" style="display: none;" class="unmatched">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(CLOB('CLOB FOR TEST'),ITG,ITG) from T1<br />sql2: select SYSIBM.SUBSTRB(CLOB('CLOB FOR TEST'),ITG,ITG) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -3324/0<br />sql2 (code/status): 0/0<br />SQL1 OUTPUT:<br />SQL3324N  Column "1" has a type of "CLOB" which is not recognized.<br /><br />SQL2 OUTPUT:<br /><br />1            <br />-------------<br />             <br /><br />  1 record(s) selected.<br /><br /><br />First result for sql(1,2): <br /><br /><a href="plan/plan23-1.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT SUBSTRB(CLOB('CLOB FOR TEST'), Q1.ITG, Q1.ITG) FROM IIFVT66.N1 AS Q1<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."ITG" FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: NOT MATCHED<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_23" style="display: none;" class="unmatched">
+	<td>Phase II</td>
+	<td colspan="3">
+		sql1: select DOB from T1 where SYSIBM.SUBSTRB(CLOB('CLOB FOR TEST'),ITG,ITG) = clob('')<br />sql2: select DOB from N1 where SYSIBM.SUBSTRB(CLOB('CLOB FOR TEST'),ITG,ITG) = clob('')<br />First result for sql(3,4): +6.67259000000000E-011<br /><br /><a href="plan/plan23-2.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT Q1.DOB AS "DOB" FROM IIFVT66.N1 AS Q1 WHERE (VARCHAR(SUBSTRB(CLOB('CLOB FOR TEST'), Q1.ITG, Q1.ITG)) = VARCHAR(CLOB('')))<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."ITG", A0."DOB" FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: NOT MATCHED<br /><br />
+	</td>
+</tr>
+<tr>
+	<td>24</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.CLOB,SYSIBM.INTEGER,SYSIBM.BIGINT)->SYSIBM.CLOB</td>
+	<td class="error"><a id="TOGGLE1_24" href="javascript:toggle1('24')">show</a></td>
+	<td class="untested"><a id="TOGGLE2_24" href="javascript:toggle2('24')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_24" style="display: none;" class="error">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(CLOB('CLOB FOR TEST'),ITG,BGI) from T1<br />sql2: select SYSIBM.SUBSTRB(CLOB('CLOB FOR TEST'),ITG,BGI) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -3324/0<br />sql2 (code/status): -0413/22003<br />SQL1 OUTPUT:<br />SQL3324N  Column "1" has a type of "CLOB" which is not recognized.<br /><br />SQL2 OUTPUT:<br /><br />1            <br />-------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_24" style="display: none;" class="untested">
+	<td>Phase II</td>
+	<td colspan="3">
+		
+	</td>
+</tr>
+<tr>
+	<td>25</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.CLOB,SYSIBM.BIGINT,SYSIBM.SMALLINT)->SYSIBM.CLOB</td>
+	<td class="error"><a id="TOGGLE1_25" href="javascript:toggle1('25')">show</a></td>
+	<td class="untested"><a id="TOGGLE2_25" href="javascript:toggle2('25')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_25" style="display: none;" class="error">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(CLOB('CLOB FOR TEST'),BGI,SMI) from T1<br />sql2: select SYSIBM.SUBSTRB(CLOB('CLOB FOR TEST'),BGI,SMI) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -3324/0<br />sql2 (code/status): -0413/22003<br />SQL1 OUTPUT:<br />SQL3324N  Column "1" has a type of "CLOB" which is not recognized.<br /><br />SQL2 OUTPUT:<br /><br />1            <br />-------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_25" style="display: none;" class="untested">
+	<td>Phase II</td>
+	<td colspan="3">
+		
+	</td>
+</tr>
+<tr>
+	<td>26</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.CLOB,SYSIBM.BIGINT,SYSIBM.INTEGER)->SYSIBM.CLOB</td>
+	<td class="error"><a id="TOGGLE1_26" href="javascript:toggle1('26')">show</a></td>
+	<td class="untested"><a id="TOGGLE2_26" href="javascript:toggle2('26')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_26" style="display: none;" class="error">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(CLOB('CLOB FOR TEST'),BGI,ITG) from T1<br />sql2: select SYSIBM.SUBSTRB(CLOB('CLOB FOR TEST'),BGI,ITG) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -3324/0<br />sql2 (code/status): -0413/22003<br />SQL1 OUTPUT:<br />SQL3324N  Column "1" has a type of "CLOB" which is not recognized.<br /><br />SQL2 OUTPUT:<br /><br />1            <br />-------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_26" style="display: none;" class="untested">
+	<td>Phase II</td>
+	<td colspan="3">
+		
+	</td>
+</tr>
+<tr>
+	<td>27</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.CLOB,SYSIBM.BIGINT,SYSIBM.BIGINT)->SYSIBM.CLOB</td>
+	<td class="error"><a id="TOGGLE1_27" href="javascript:toggle1('27')">show</a></td>
+	<td class="untested"><a id="TOGGLE2_27" href="javascript:toggle2('27')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_27" style="display: none;" class="error">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(CLOB('CLOB FOR TEST'),BGI,BGI) from T1<br />sql2: select SYSIBM.SUBSTRB(CLOB('CLOB FOR TEST'),BGI,BGI) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -3324/0<br />sql2 (code/status): -0413/22003<br />SQL1 OUTPUT:<br />SQL3324N  Column "1" has a type of "CLOB" which is not recognized.<br /><br />SQL2 OUTPUT:<br /><br />1            <br />-------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_27" style="display: none;" class="untested">
+	<td>Phase II</td>
+	<td colspan="3">
+		
+	</td>
+</tr>
+<tr>
+	<td>28</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.GRAPHIC,SYSIBM.SMALLINT,SYSIBM.SMALLINT)->SYSIBM.GRAPHIC</td>
+	<td class="unmatched"><a id="TOGGLE1_28" href="javascript:toggle1('28')">show</a></td>
+	<td class="matched"><a id="TOGGLE2_28" href="javascript:toggle2('28')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_28" style="display: none;" class="unmatched">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(GPH,SMI,SMI) from T1<br />sql2: select SYSIBM.SUBSTRB(GPH,SMI,SMI) from N1<br />First result for sql(1,2): G<br /><br /><a href="plan/plan28-1.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT SUBSTRB(VARCHAR(Q1.GPH), Q1.SMI, Q1.SMI) FROM IIFVT66.N1 AS Q1<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."GPH", A0."SMI" FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: NOT MATCHED<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_28" style="display: none;" class="matched">
+	<td>Phase II</td>
+	<td colspan="3">
+		sql1: select DOB from T1 where SYSIBM.SUBSTRB(GPH,SMI,SMI) = 'G'<br />sql2: select DOB from N1 where SYSIBM.SUBSTRB(GPH,SMI,SMI) = 'G'<br />First result for sql(3,4): +6.67259000000000E-011<br /><br /><a href="plan/plan28-2.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT Q1.DOB AS "DOB" FROM IIFVT66.N1 AS Q1 WHERE (SUBSTRB(VARCHAR(Q1.GPH), Q1.SMI, Q1.SMI) = 'G')<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."DOB" FROM "IIFVT66"."T1" A0 WHERE (SYSIBM.SUBSTRB(SYSIBM.VARCHAR(A0."GPH"), A0."SMI", A0."SMI") = 'G') FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: MATCHED<br /><br />
+	</td>
+</tr>
+<tr>
+	<td>29</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.GRAPHIC,SYSIBM.SMALLINT,SYSIBM.INTEGER)->SYSIBM.GRAPHIC</td>
+	<td class="unmatched"><a id="TOGGLE1_29" href="javascript:toggle1('29')">show</a></td>
+	<td class="matched"><a id="TOGGLE2_29" href="javascript:toggle2('29')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_29" style="display: none;" class="unmatched">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(GPH,SMI,ITG) from T1<br />sql2: select SYSIBM.SUBSTRB(GPH,SMI,ITG) from N1<br />First result for sql(1,2): GRAPHIC FOR TEST<br /><br /><a href="plan/plan29-1.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT SUBSTRB(VARCHAR(Q1.GPH), Q1.SMI, Q1.ITG) FROM IIFVT66.N1 AS Q1<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."GPH", A0."SMI", A0."ITG" FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: NOT MATCHED<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_29" style="display: none;" class="matched">
+	<td>Phase II</td>
+	<td colspan="3">
+		sql1: select DOB from T1 where SYSIBM.SUBSTRB(GPH,SMI,ITG) = 'GRAPHIC FOR TEST'<br />sql2: select DOB from N1 where SYSIBM.SUBSTRB(GPH,SMI,ITG) = 'GRAPHIC FOR TEST'<br />First result for sql(3,4): +6.67259000000000E-011<br /><br /><a href="plan/plan29-2.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT Q1.DOB AS "DOB" FROM IIFVT66.N1 AS Q1 WHERE (SUBSTRB(VARCHAR(Q1.GPH), Q1.SMI, Q1.ITG) = 'GRAPHIC FOR TEST')<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."DOB" FROM "IIFVT66"."T1" A0 WHERE (SYSIBM.SUBSTRB(SYSIBM.VARCHAR(A0."GPH"), A0."SMI", A0."ITG") = 'GRAPHIC FOR TEST') FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: MATCHED<br /><br />
+	</td>
+</tr>
+<tr>
+	<td>30</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.GRAPHIC,SYSIBM.SMALLINT,SYSIBM.BIGINT)->SYSIBM.GRAPHIC</td>
+	<td class="error"><a id="TOGGLE1_30" href="javascript:toggle1('30')">show</a></td>
+	<td class="untested"><a id="TOGGLE2_30" href="javascript:toggle2('30')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_30" style="display: none;" class="error">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(GPH,SMI,BGI) from T1<br />sql2: select SYSIBM.SUBSTRB(GPH,SMI,BGI) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -0413/22003<br />sql2 (code/status): -0413/22003<br />SQL1 OUTPUT:<br /><br />1                                                                                                                                                                                            <br />---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />SQL2 OUTPUT:<br /><br />1                                                                                                                                                                                            <br />---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_30" style="display: none;" class="untested">
+	<td>Phase II</td>
+	<td colspan="3">
+		
+	</td>
+</tr>
+<tr>
+	<td>31</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.GRAPHIC,SYSIBM.INTEGER,SYSIBM.SMALLINT)->SYSIBM.GRAPHIC</td>
+	<td class="unmatched"><a id="TOGGLE1_31" href="javascript:toggle1('31')">show</a></td>
+	<td class="matched"><a id="TOGGLE2_31" href="javascript:toggle2('31')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_31" style="display: none;" class="unmatched">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(GPH,ITG,SMI) from T1<br />sql2: select SYSIBM.SUBSTRB(GPH,ITG,SMI) from N1<br />First result for sql(1,2): <br /><br /><a href="plan/plan31-1.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT SUBSTRB(VARCHAR(Q1.GPH), Q1.ITG, Q1.SMI) FROM IIFVT66.N1 AS Q1<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."GPH", A0."ITG", A0."SMI" FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: NOT MATCHED<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_31" style="display: none;" class="matched">
+	<td>Phase II</td>
+	<td colspan="3">
+		sql1: select DOB from T1 where SYSIBM.SUBSTRB(GPH,ITG,SMI) = ''<br />sql2: select DOB from N1 where SYSIBM.SUBSTRB(GPH,ITG,SMI) = ''<br />First result for sql(3,4): +6.67259000000000E-011<br /><br /><a href="plan/plan31-2.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT Q1.DOB AS "DOB" FROM IIFVT66.N1 AS Q1 WHERE (SUBSTRB(VARCHAR(Q1.GPH), Q1.ITG, Q1.SMI) = '')<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."DOB" FROM "IIFVT66"."T1" A0 WHERE (SYSIBM.SUBSTRB(SYSIBM.VARCHAR(A0."GPH"), A0."ITG", A0."SMI") = '') FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: MATCHED<br /><br />
+	</td>
+</tr>
+<tr>
+	<td>32</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.GRAPHIC,SYSIBM.INTEGER,SYSIBM.INTEGER)->SYSIBM.GRAPHIC</td>
+	<td class="unmatched"><a id="TOGGLE1_32" href="javascript:toggle1('32')">show</a></td>
+	<td class="matched"><a id="TOGGLE2_32" href="javascript:toggle2('32')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_32" style="display: none;" class="unmatched">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(GPH,ITG,ITG) from T1<br />sql2: select SYSIBM.SUBSTRB(GPH,ITG,ITG) from N1<br />First result for sql(1,2): <br /><br /><a href="plan/plan32-1.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT SUBSTRB(VARCHAR(Q1.GPH), Q1.ITG, Q1.ITG) FROM IIFVT66.N1 AS Q1<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."GPH", A0."ITG" FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: NOT MATCHED<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_32" style="display: none;" class="matched">
+	<td>Phase II</td>
+	<td colspan="3">
+		sql1: select DOB from T1 where SYSIBM.SUBSTRB(GPH,ITG,ITG) = ''<br />sql2: select DOB from N1 where SYSIBM.SUBSTRB(GPH,ITG,ITG) = ''<br />First result for sql(3,4): +6.67259000000000E-011<br /><br /><a href="plan/plan32-2.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT Q1.DOB AS "DOB" FROM IIFVT66.N1 AS Q1 WHERE (SUBSTRB(VARCHAR(Q1.GPH), Q1.ITG, Q1.ITG) = '')<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."DOB" FROM "IIFVT66"."T1" A0 WHERE (SYSIBM.SUBSTRB(SYSIBM.VARCHAR(A0."GPH"), A0."ITG", A0."ITG") = '') FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: MATCHED<br /><br />
+	</td>
+</tr>
+<tr>
+	<td>33</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.GRAPHIC,SYSIBM.INTEGER,SYSIBM.BIGINT)->SYSIBM.GRAPHIC</td>
+	<td class="error"><a id="TOGGLE1_33" href="javascript:toggle1('33')">show</a></td>
+	<td class="untested"><a id="TOGGLE2_33" href="javascript:toggle2('33')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_33" style="display: none;" class="error">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(GPH,ITG,BGI) from T1<br />sql2: select SYSIBM.SUBSTRB(GPH,ITG,BGI) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -0413/22003<br />sql2 (code/status): -0413/22003<br />SQL1 OUTPUT:<br /><br />1                                                                                                                                                                                            <br />---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />SQL2 OUTPUT:<br /><br />1                                                                                                                                                                                            <br />---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_33" style="display: none;" class="untested">
+	<td>Phase II</td>
+	<td colspan="3">
+		
+	</td>
+</tr>
+<tr>
+	<td>34</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.GRAPHIC,SYSIBM.BIGINT,SYSIBM.SMALLINT)->SYSIBM.GRAPHIC</td>
+	<td class="error"><a id="TOGGLE1_34" href="javascript:toggle1('34')">show</a></td>
+	<td class="untested"><a id="TOGGLE2_34" href="javascript:toggle2('34')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_34" style="display: none;" class="error">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(GPH,BGI,SMI) from T1<br />sql2: select SYSIBM.SUBSTRB(GPH,BGI,SMI) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -0413/22003<br />sql2 (code/status): -0413/22003<br />SQL1 OUTPUT:<br /><br />1                                                                                                                                                                                            <br />---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />SQL2 OUTPUT:<br /><br />1                                                                                                                                                                                            <br />---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_34" style="display: none;" class="untested">
+	<td>Phase II</td>
+	<td colspan="3">
+		
+	</td>
+</tr>
+<tr>
+	<td>35</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.GRAPHIC,SYSIBM.BIGINT,SYSIBM.INTEGER)->SYSIBM.GRAPHIC</td>
+	<td class="error"><a id="TOGGLE1_35" href="javascript:toggle1('35')">show</a></td>
+	<td class="untested"><a id="TOGGLE2_35" href="javascript:toggle2('35')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_35" style="display: none;" class="error">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(GPH,BGI,ITG) from T1<br />sql2: select SYSIBM.SUBSTRB(GPH,BGI,ITG) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -0413/22003<br />sql2 (code/status): -0413/22003<br />SQL1 OUTPUT:<br /><br />1                                                                                                                                                                                            <br />---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />SQL2 OUTPUT:<br /><br />1                                                                                                                                                                                            <br />---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_35" style="display: none;" class="untested">
+	<td>Phase II</td>
+	<td colspan="3">
+		
+	</td>
+</tr>
+<tr>
+	<td>36</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.GRAPHIC,SYSIBM.BIGINT,SYSIBM.BIGINT)->SYSIBM.GRAPHIC</td>
+	<td class="error"><a id="TOGGLE1_36" href="javascript:toggle1('36')">show</a></td>
+	<td class="untested"><a id="TOGGLE2_36" href="javascript:toggle2('36')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_36" style="display: none;" class="error">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(GPH,BGI,BGI) from T1<br />sql2: select SYSIBM.SUBSTRB(GPH,BGI,BGI) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -0413/22003<br />sql2 (code/status): -0413/22003<br />SQL1 OUTPUT:<br /><br />1                                                                                                                                                                                            <br />---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />SQL2 OUTPUT:<br /><br />1                                                                                                                                                                                            <br />---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_36" style="display: none;" class="untested">
+	<td>Phase II</td>
+	<td colspan="3">
+		
+	</td>
+</tr>
+<tr>
+	<td>37</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.VARGRAPHIC,SYSIBM.SMALLINT,SYSIBM.SMALLINT)->SYSIBM.VARGRAPHIC</td>
+	<td class="unmatched"><a id="TOGGLE1_37" href="javascript:toggle1('37')">show</a></td>
+	<td class="matched"><a id="TOGGLE2_37" href="javascript:toggle2('37')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_37" style="display: none;" class="unmatched">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(VGP,SMI,SMI) from T1<br />sql2: select SYSIBM.SUBSTRB(VGP,SMI,SMI) from N1<br />First result for sql(1,2): V<br /><br /><a href="plan/plan37-1.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT SUBSTRB(VARCHAR(Q1.VGP), Q1.SMI, Q1.SMI) FROM IIFVT66.N1 AS Q1<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."VGP", A0."SMI" FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: NOT MATCHED<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_37" style="display: none;" class="matched">
+	<td>Phase II</td>
+	<td colspan="3">
+		sql1: select DOB from T1 where SYSIBM.SUBSTRB(VGP,SMI,SMI) = 'V'<br />sql2: select DOB from N1 where SYSIBM.SUBSTRB(VGP,SMI,SMI) = 'V'<br />First result for sql(3,4): +6.67259000000000E-011<br /><br /><a href="plan/plan37-2.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT Q1.DOB AS "DOB" FROM IIFVT66.N1 AS Q1 WHERE (SUBSTRB(VARCHAR(Q1.VGP), Q1.SMI, Q1.SMI) = 'V')<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."DOB" FROM "IIFVT66"."T1" A0 WHERE (SYSIBM.SUBSTRB(SYSIBM.VARCHAR(A0."VGP"), A0."SMI", A0."SMI") = 'V') FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: MATCHED<br /><br />
+	</td>
+</tr>
+<tr>
+	<td>38</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.VARGRAPHIC,SYSIBM.SMALLINT,SYSIBM.INTEGER)->SYSIBM.VARGRAPHIC</td>
+	<td class="unmatched"><a id="TOGGLE1_38" href="javascript:toggle1('38')">show</a></td>
+	<td class="matched"><a id="TOGGLE2_38" href="javascript:toggle2('38')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_38" style="display: none;" class="unmatched">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(VGP,SMI,ITG) from T1<br />sql2: select SYSIBM.SUBSTRB(VGP,SMI,ITG) from N1<br />First result for sql(1,2): VARGRAPHIC FOR TEST<br /><br /><a href="plan/plan38-1.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT SUBSTRB(VARCHAR(Q1.VGP), Q1.SMI, Q1.ITG) FROM IIFVT66.N1 AS Q1<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."VGP", A0."SMI", A0."ITG" FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: NOT MATCHED<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_38" style="display: none;" class="matched">
+	<td>Phase II</td>
+	<td colspan="3">
+		sql1: select DOB from T1 where SYSIBM.SUBSTRB(VGP,SMI,ITG) = 'VARGRAPHIC FOR TEST'<br />sql2: select DOB from N1 where SYSIBM.SUBSTRB(VGP,SMI,ITG) = 'VARGRAPHIC FOR TEST'<br />First result for sql(3,4): +6.67259000000000E-011<br /><br /><a href="plan/plan38-2.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT Q1.DOB AS "DOB" FROM IIFVT66.N1 AS Q1 WHERE (SUBSTRB(VARCHAR(Q1.VGP), Q1.SMI, Q1.ITG) = 'VARGRAPHIC FOR TEST')<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."DOB" FROM "IIFVT66"."T1" A0 WHERE (SYSIBM.SUBSTRB(SYSIBM.VARCHAR(A0."VGP"), A0."SMI", A0."ITG") = 'VARGRAPHIC FOR TEST') FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: MATCHED<br /><br />
+	</td>
+</tr>
+<tr>
+	<td>39</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.VARGRAPHIC,SYSIBM.SMALLINT,SYSIBM.BIGINT)->SYSIBM.VARGRAPHIC</td>
+	<td class="error"><a id="TOGGLE1_39" href="javascript:toggle1('39')">show</a></td>
+	<td class="untested"><a id="TOGGLE2_39" href="javascript:toggle2('39')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_39" style="display: none;" class="error">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(VGP,SMI,BGI) from T1<br />sql2: select SYSIBM.SUBSTRB(VGP,SMI,BGI) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -0413/22003<br />sql2 (code/status): -0413/22003<br />SQL1 OUTPUT:<br /><br />1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               <br />------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />SQL2 OUTPUT:<br /><br />1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               <br />------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_39" style="display: none;" class="untested">
+	<td>Phase II</td>
+	<td colspan="3">
+		
+	</td>
+</tr>
+<tr>
+	<td>40</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.VARGRAPHIC,SYSIBM.INTEGER,SYSIBM.SMALLINT)->SYSIBM.VARGRAPHIC</td>
+	<td class="unmatched"><a id="TOGGLE1_40" href="javascript:toggle1('40')">show</a></td>
+	<td class="matched"><a id="TOGGLE2_40" href="javascript:toggle2('40')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_40" style="display: none;" class="unmatched">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(VGP,ITG,SMI) from T1<br />sql2: select SYSIBM.SUBSTRB(VGP,ITG,SMI) from N1<br />First result for sql(1,2): <br /><br /><a href="plan/plan40-1.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT SUBSTRB(VARCHAR(Q1.VGP), Q1.ITG, Q1.SMI) FROM IIFVT66.N1 AS Q1<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."VGP", A0."ITG", A0."SMI" FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: NOT MATCHED<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_40" style="display: none;" class="matched">
+	<td>Phase II</td>
+	<td colspan="3">
+		sql1: select DOB from T1 where SYSIBM.SUBSTRB(VGP,ITG,SMI) = ''<br />sql2: select DOB from N1 where SYSIBM.SUBSTRB(VGP,ITG,SMI) = ''<br />First result for sql(3,4): +6.67259000000000E-011<br /><br /><a href="plan/plan40-2.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT Q1.DOB AS "DOB" FROM IIFVT66.N1 AS Q1 WHERE (SUBSTRB(VARCHAR(Q1.VGP), Q1.ITG, Q1.SMI) = '')<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."DOB" FROM "IIFVT66"."T1" A0 WHERE (SYSIBM.SUBSTRB(SYSIBM.VARCHAR(A0."VGP"), A0."ITG", A0."SMI") = '') FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: MATCHED<br /><br />
+	</td>
+</tr>
+<tr>
+	<td>41</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.VARGRAPHIC,SYSIBM.INTEGER,SYSIBM.INTEGER)->SYSIBM.VARGRAPHIC</td>
+	<td class="unmatched"><a id="TOGGLE1_41" href="javascript:toggle1('41')">show</a></td>
+	<td class="matched"><a id="TOGGLE2_41" href="javascript:toggle2('41')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_41" style="display: none;" class="unmatched">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(VGP,ITG,ITG) from T1<br />sql2: select SYSIBM.SUBSTRB(VGP,ITG,ITG) from N1<br />First result for sql(1,2): <br /><br /><a href="plan/plan41-1.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT SUBSTRB(VARCHAR(Q1.VGP), Q1.ITG, Q1.ITG) FROM IIFVT66.N1 AS Q1<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."VGP", A0."ITG" FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: NOT MATCHED<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_41" style="display: none;" class="matched">
+	<td>Phase II</td>
+	<td colspan="3">
+		sql1: select DOB from T1 where SYSIBM.SUBSTRB(VGP,ITG,ITG) = ''<br />sql2: select DOB from N1 where SYSIBM.SUBSTRB(VGP,ITG,ITG) = ''<br />First result for sql(3,4): +6.67259000000000E-011<br /><br /><a href="plan/plan41-2.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT Q1.DOB AS "DOB" FROM IIFVT66.N1 AS Q1 WHERE (SUBSTRB(VARCHAR(Q1.VGP), Q1.ITG, Q1.ITG) = '')<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."DOB" FROM "IIFVT66"."T1" A0 WHERE (SYSIBM.SUBSTRB(SYSIBM.VARCHAR(A0."VGP"), A0."ITG", A0."ITG") = '') FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: MATCHED<br /><br />
+	</td>
+</tr>
+<tr>
+	<td>42</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.VARGRAPHIC,SYSIBM.INTEGER,SYSIBM.BIGINT)->SYSIBM.VARGRAPHIC</td>
+	<td class="error"><a id="TOGGLE1_42" href="javascript:toggle1('42')">show</a></td>
+	<td class="untested"><a id="TOGGLE2_42" href="javascript:toggle2('42')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_42" style="display: none;" class="error">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(VGP,ITG,BGI) from T1<br />sql2: select SYSIBM.SUBSTRB(VGP,ITG,BGI) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -0413/22003<br />sql2 (code/status): -0413/22003<br />SQL1 OUTPUT:<br /><br />1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               <br />------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />SQL2 OUTPUT:<br /><br />1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               <br />------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_42" style="display: none;" class="untested">
+	<td>Phase II</td>
+	<td colspan="3">
+		
+	</td>
+</tr>
+<tr>
+	<td>43</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.VARGRAPHIC,SYSIBM.BIGINT,SYSIBM.SMALLINT)->SYSIBM.VARGRAPHIC</td>
+	<td class="error"><a id="TOGGLE1_43" href="javascript:toggle1('43')">show</a></td>
+	<td class="untested"><a id="TOGGLE2_43" href="javascript:toggle2('43')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_43" style="display: none;" class="error">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(VGP,BGI,SMI) from T1<br />sql2: select SYSIBM.SUBSTRB(VGP,BGI,SMI) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -0413/22003<br />sql2 (code/status): -0413/22003<br />SQL1 OUTPUT:<br /><br />1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               <br />------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />SQL2 OUTPUT:<br /><br />1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               <br />------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_43" style="display: none;" class="untested">
+	<td>Phase II</td>
+	<td colspan="3">
+		
+	</td>
+</tr>
+<tr>
+	<td>44</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.VARGRAPHIC,SYSIBM.BIGINT,SYSIBM.INTEGER)->SYSIBM.VARGRAPHIC</td>
+	<td class="error"><a id="TOGGLE1_44" href="javascript:toggle1('44')">show</a></td>
+	<td class="untested"><a id="TOGGLE2_44" href="javascript:toggle2('44')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_44" style="display: none;" class="error">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(VGP,BGI,ITG) from T1<br />sql2: select SYSIBM.SUBSTRB(VGP,BGI,ITG) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -0413/22003<br />sql2 (code/status): -0413/22003<br />SQL1 OUTPUT:<br /><br />1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               <br />------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />SQL2 OUTPUT:<br /><br />1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               <br />------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_44" style="display: none;" class="untested">
+	<td>Phase II</td>
+	<td colspan="3">
+		
+	</td>
+</tr>
+<tr>
+	<td>45</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.VARGRAPHIC,SYSIBM.BIGINT,SYSIBM.BIGINT)->SYSIBM.VARGRAPHIC</td>
+	<td class="error"><a id="TOGGLE1_45" href="javascript:toggle1('45')">show</a></td>
+	<td class="untested"><a id="TOGGLE2_45" href="javascript:toggle2('45')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_45" style="display: none;" class="error">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(VGP,BGI,BGI) from T1<br />sql2: select SYSIBM.SUBSTRB(VGP,BGI,BGI) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -0413/22003<br />sql2 (code/status): -0413/22003<br />SQL1 OUTPUT:<br /><br />1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               <br />------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />SQL2 OUTPUT:<br /><br />1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               <br />------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_45" style="display: none;" class="untested">
+	<td>Phase II</td>
+	<td colspan="3">
+		
+	</td>
+</tr>
+<tr>
+	<td>46</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.DBCLOB,SYSIBM.SMALLINT,SYSIBM.SMALLINT)->SYSIBM.DBCLOB</td>
+	<td class="unmatched"><a id="TOGGLE1_46" href="javascript:toggle1('46')">show</a></td>
+	<td class="unmatched"><a id="TOGGLE2_46" href="javascript:toggle2('46')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_46" style="display: none;" class="unmatched">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(DBCLOB('DBCLOB FOR TEST'),SMI,SMI) from T1<br />sql2: select SYSIBM.SUBSTRB(DBCLOB('DBCLOB FOR TEST'),SMI,SMI) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -3324/0<br />sql2 (code/status): 0/0<br />SQL1 OUTPUT:<br />SQL3324N  Column "1" has a type of "CLOB" which is not recognized.<br /><br />SQL2 OUTPUT:<br /><br />1                                            <br />---------------------------------------------<br />D                                            <br /><br />  1 record(s) selected.<br /><br /><br />First result for sql(1,2): D<br /><br /><a href="plan/plan46-1.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT SUBSTRB(CLOB(DBCLOB('DBCLOB FOR TEST')), Q1.SMI, Q1.SMI) FROM IIFVT66.N1 AS Q1<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."SMI" FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: NOT MATCHED<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_46" style="display: none;" class="unmatched">
+	<td>Phase II</td>
+	<td colspan="3">
+		sql1: select DOB from T1 where SYSIBM.SUBSTRB(DBCLOB('DBCLOB FOR TEST'),SMI,SMI) = dbclob('D')<br />sql2: select DOB from N1 where SYSIBM.SUBSTRB(DBCLOB('DBCLOB FOR TEST'),SMI,SMI) = dbclob('D')<br />First result for sql(3,4): +6.67259000000000E-011<br /><br /><a href="plan/plan46-2.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT Q1.DOB AS "DOB" FROM IIFVT66.N1 AS Q1 WHERE (VARGRAPHIC(DBCLOB(SUBSTRB(CLOB(DBCLOB('DBCLOB FOR TEST')), Q1.SMI, Q1.SMI))) = VARGRAPHIC(DBCLOB('D')))<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."SMI", A0."DOB" FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: NOT MATCHED<br /><br />
+	</td>
+</tr>
+<tr>
+	<td>47</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.DBCLOB,SYSIBM.SMALLINT,SYSIBM.INTEGER)->SYSIBM.DBCLOB</td>
+	<td class="unmatched"><a id="TOGGLE1_47" href="javascript:toggle1('47')">show</a></td>
+	<td class="unmatched"><a id="TOGGLE2_47" href="javascript:toggle2('47')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_47" style="display: none;" class="unmatched">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(DBCLOB('DBCLOB FOR TEST'),SMI,ITG) from T1<br />sql2: select SYSIBM.SUBSTRB(DBCLOB('DBCLOB FOR TEST'),SMI,ITG) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -3324/0<br />sql2 (code/status): 0/0<br />SQL1 OUTPUT:<br />SQL3324N  Column "1" has a type of "CLOB" which is not recognized.<br /><br />SQL2 OUTPUT:<br /><br />1                                            <br />---------------------------------------------<br />DBCLOB FOR TEST                              <br /><br />  1 record(s) selected.<br /><br /><br />First result for sql(1,2): DBCLOB FOR TEST<br /><br /><a href="plan/plan47-1.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT SUBSTRB(CLOB(DBCLOB('DBCLOB FOR TEST')), Q1.SMI, Q1.ITG) FROM IIFVT66.N1 AS Q1<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."SMI", A0."ITG" FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: NOT MATCHED<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_47" style="display: none;" class="unmatched">
+	<td>Phase II</td>
+	<td colspan="3">
+		sql1: select DOB from T1 where SYSIBM.SUBSTRB(DBCLOB('DBCLOB FOR TEST'),SMI,ITG) = dbclob('DBCLOB FOR TEST')<br />sql2: select DOB from N1 where SYSIBM.SUBSTRB(DBCLOB('DBCLOB FOR TEST'),SMI,ITG) = dbclob('DBCLOB FOR TEST')<br />First result for sql(3,4): +6.67259000000000E-011<br /><br /><a href="plan/plan47-2.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT Q1.DOB AS "DOB" FROM IIFVT66.N1 AS Q1 WHERE (VARGRAPHIC(DBCLOB(SUBSTRB(CLOB(DBCLOB('DBCLOB FOR TEST')), Q1.SMI, Q1.ITG))) = VARGRAPHIC(DBCLOB('DBCLOB FOR TEST')))<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."SMI", A0."ITG", A0."DOB" FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: NOT MATCHED<br /><br />
+	</td>
+</tr>
+<tr>
+	<td>48</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.DBCLOB,SYSIBM.SMALLINT,SYSIBM.BIGINT)->SYSIBM.DBCLOB</td>
+	<td class="error"><a id="TOGGLE1_48" href="javascript:toggle1('48')">show</a></td>
+	<td class="untested"><a id="TOGGLE2_48" href="javascript:toggle2('48')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_48" style="display: none;" class="error">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(DBCLOB('DBCLOB FOR TEST'),SMI,BGI) from T1<br />sql2: select SYSIBM.SUBSTRB(DBCLOB('DBCLOB FOR TEST'),SMI,BGI) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -3324/0<br />sql2 (code/status): -0413/22003<br />SQL1 OUTPUT:<br />SQL3324N  Column "1" has a type of "CLOB" which is not recognized.<br /><br />SQL2 OUTPUT:<br /><br />1                                            <br />---------------------------------------------<br />SQL0413N  Overflow occurred during numeric data type conversion.  <br />SQLSTATE=22003<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_48" style="display: none;" class="untested">
+	<td>Phase II</td>
+	<td colspan="3">
+		
+	</td>
+</tr>
+<tr>
+	<td>49</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.DBCLOB,SYSIBM.INTEGER,SYSIBM.SMALLINT)->SYSIBM.DBCLOB</td>
+	<td class="unmatched"><a id="TOGGLE1_49" href="javascript:toggle1('49')">show</a></td>
+	<td class="unmatched"><a id="TOGGLE2_49" href="javascript:toggle2('49')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_49" style="display: none;" class="unmatched">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(DBCLOB('DBCLOB FOR TEST'),ITG,SMI) from T1<br />sql2: select SYSIBM.SUBSTRB(DBCLOB('DBCLOB FOR TEST'),ITG,SMI) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -3324/0<br />sql2 (code/status): 0/0<br />SQL1 OUTPUT:<br />SQL3324N  Column "1" has a type of "CLOB" which is not recognized.<br /><br />SQL2 OUTPUT:<br /><br />1                                            <br />---------------------------------------------<br />                                             <br /><br />  1 record(s) selected.<br /><br /><br />First result for sql(1,2): <br /><br /><a href="plan/plan49-1.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT SUBSTRB(CLOB(DBCLOB('DBCLOB FOR TEST')), Q1.ITG, Q1.SMI) FROM IIFVT66.N1 AS Q1<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."ITG", A0."SMI" FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: NOT MATCHED<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_49" style="display: none;" class="unmatched">
+	<td>Phase II</td>
+	<td colspan="3">
+		sql1: select DOB from T1 where SYSIBM.SUBSTRB(DBCLOB('DBCLOB FOR TEST'),ITG,SMI) = dbclob('')<br />sql2: select DOB from N1 where SYSIBM.SUBSTRB(DBCLOB('DBCLOB FOR TEST'),ITG,SMI) = dbclob('')<br />First result for sql(3,4): +6.67259000000000E-011<br /><br /><a href="plan/plan49-2.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT Q1.DOB AS "DOB" FROM IIFVT66.N1 AS Q1 WHERE (VARGRAPHIC(DBCLOB(SUBSTRB(CLOB(DBCLOB('DBCLOB FOR TEST')), Q1.ITG, Q1.SMI))) = VARGRAPHIC(DBCLOB('')))<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."ITG", A0."SMI", A0."DOB" FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: NOT MATCHED<br /><br />
+	</td>
+</tr>
+<tr>
+	<td>50</td>
+	<td>SYSIBM.SUBSTRB (SYSIBM.DBCLOB,SYSIBM.INTEGER,SYSIBM.INTEGER)->SYSIBM.DBCLOB</td>
+	<td class="unmatched"><a id="TOGGLE1_50" href="javascript:toggle1('50')">show</a></td>
+	<td class="unmatched"><a id="TOGGLE2_50" href="javascript:toggle2('50')">show</a></td>
+</tr>
+<tr id="PHASE1_CONTENT_50" style="display: none;" class="unmatched">
+	<td>Phase I</td>
+	<td colspan="3">
+		sql1: select SYSIBM.SUBSTRB(DBCLOB('DBCLOB FOR TEST'),ITG,ITG) from T1<br />sql2: select SYSIBM.SUBSTRB(DBCLOB('DBCLOB FOR TEST'),ITG,ITG) from N1<br /> [E] Error occurred.<br />sql1 (code/status): -3324/0<br />sql2 (code/status): 0/0<br />SQL1 OUTPUT:<br />SQL3324N  Column "1" has a type of "CLOB" which is not recognized.<br /><br />SQL2 OUTPUT:<br /><br />1                                            <br />---------------------------------------------<br />                                             <br /><br />  1 record(s) selected.<br /><br /><br />First result for sql(1,2): <br /><br /><a href="plan/plan50-1.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT SUBSTRB(CLOB(DBCLOB('DBCLOB FOR TEST')), Q1.ITG, Q1.ITG) FROM IIFVT66.N1 AS Q1<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."ITG" FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: NOT MATCHED<br /><br />
+	</td>
+</tr>
+<tr id="PHASE2_CONTENT_50" style="display: none;" class="unmatched">
+	<td>Phase II</td>
+	<td colspan="3">
+		sql1: select DOB from T1 where SYSIBM.SUBSTRB(DBCLOB('DBCLOB FOR TEST'),ITG,ITG) = dbclob('')<br />sql2: select DOB from N1 where SYSIBM.SUBSTRB(DBCLOB('DBCLOB FOR TEST'),ITG,ITG) = dbclob('')<br />First result for sql(3,4): +6.67259000000000E-011<br /><br /><a href="plan/plan50-2.pln">db2exfmt_plan</a><br /><br />optimized_statement: SELECT Q1.DOB AS "DOB" FROM IIFVT66.N1 AS Q1 WHERE (VARGRAPHIC(DBCLOB(SUBSTRB(CLOB(DBCLOB('DBCLOB FOR TEST')), Q1.ITG, Q1.ITG))) = VARGRAPHIC(DBCLOB('')))<br />local_function_regex_pattern: SUBSTRB\s*\(\s*.+?\s*\)<br />remote_statements: SELECT A0."ITG", A0."DOB" FROM "IIFVT66"."T1" A0 FOR READ ONLY<br />remote_function_name: SUBSTRB(:1P, :2P, :3P)<br />remote_function_regex_pattern: SUBSTRB\(.+?,\s*.+?,\s*.+?\)<br />push_down_result: NOT MATCHED<br /><br />
+	</td>
+</tr>
+</table>
+	</body>
+</html>
